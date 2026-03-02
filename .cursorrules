@@ -1,0 +1,87 @@
+# La Nueva Recoleta — Cursor Rules
+
+## Project Context
+Landing page for "La Nueva Recoleta", a bakery & café in Buenos Aires.
+Stack: React 19 + TypeScript + Vite + Tailwind CSS v4 + Framer Motion.
+
+## Code Style
+
+### TypeScript
+- Always use TypeScript with strict mode. No `any` types — use `unknown` if the type is truly dynamic.
+- Prefer `interface` for component props, `type` for unions and utility types.
+- Export types from `src/types/index.ts`.
+- Use proper null handling with optional chaining (`?.`) and nullish coalescing (`??`).
+
+### React
+- Functional components only. No class components.
+- Name components in PascalCase, files match the component name.
+- Keep components small and focused. Extract logic into custom hooks under `src/hooks/`.
+- Use `React.RefObject<HTMLElement>` when typing refs. Never cast as `any`.
+- Prefer named exports for components.
+
+### Tailwind CSS v4
+- Use Tailwind utility classes directly. No `@apply` unless strictly needed for global base styles.
+- Brand colors defined in `src/index.css` under `@theme`. Use them as: `bg-brand-burgundy`, `text-brand-cream`, etc.
+- Brand fonts: `font-[Playfair_Display]`, `font-[Dancing_Script]`, `font-[Inter]`.
+- Mobile-first: start with base (mobile) styles, then add `md:` and `lg:` breakpoints.
+- Use `transition-all duration-300` as the default transition. Prefer smooth, non-jarring values.
+
+### Framer Motion
+- Use `motion.div`, `motion.section`, etc. for animated elements.
+- For scroll-triggered animations, prefer `whileInView` with `viewport={{ once: true, margin: '-80px' }}`.
+- Use `AnimatePresence` for enter/exit animations.
+- Use the `useInView` custom hook for imperative scroll detection.
+- Keep animations subtle: `y: [0, 20]`, opacity fades, slight scale changes. No excessive movement.
+
+### File Structure
+```
+src/
+  components/
+    layout/     # Navbar, Footer
+    sections/   # Hero, About, Menu, Reviews, Location
+    ui/         # Reusable small components (StarRating, Button, etc.)
+  hooks/        # Custom React hooks
+  types/        # TypeScript interfaces and types
+  data/         # Mock data and constants
+  assets/
+    images/     # Static images
+    video/      # Hero video
+```
+
+## Design Tokens (Brand)
+- Primary: `#7B1C1C` (burgundy)
+- Primary Dark: `#5A1010`
+- Primary Light: `#9B2D2D`
+- Cream: `#FAF6F0`
+- Brown: `#3D1F0D`
+- Gold: `#C9973A`
+- Background: `#1A1008` (charcoal-brown)
+
+## Naming Conventions
+- Component files: `PascalCase.tsx`
+- Hook files: `useCamelCase.ts`
+- Utility files: `camelCase.ts`
+- CSS classes: Tailwind only, no custom class names unless necessary
+
+## Performance
+- Lazy load images with `loading="lazy"` attribute.
+- Use `next/image` equivalent pattern: always provide `width`, `height`, and `alt`.
+- Videos must have `autoPlay muted loop playsInline` and a `poster` fallback.
+- Avoid unnecessary re-renders: memoize with `useMemo`/`useCallback` only when profiling shows benefit.
+
+## Accessibility
+- All interactive elements must have accessible labels (`aria-label`, `aria-describedby`).
+- Use semantic HTML: `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`.
+- Buttons must have visible focus states.
+- Color contrast must meet WCAG AA minimum.
+
+## API Integration (Fudo — coming soon)
+- API service functions go in `src/services/fudoApi.ts`.
+- Use React Query (TanStack Query) for data fetching when implemented.
+- Types for API responses go in `src/types/fudo.ts`.
+- Keep mock data in `src/data/mockData.ts` as fallback.
+
+## Git
+- Commit messages in imperative mood, in Spanish or English.
+- Branch naming: `feature/`, `fix/`, `chore/`.
+- No direct commits to `main`.

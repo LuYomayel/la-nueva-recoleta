@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create vite@latest . -- --template react-ts)",
+      "Bash(printf \"y\\\\n\")",
+      "Bash(npx create-vite@latest . --template react-ts)",
+      "Bash(npx create-vite@latest \"nueva-recoleta\" --template react-ts)",
+      "Bash(npm install)",
+      "Bash(npm install -D tailwindcss @tailwindcss/vite)",
+      "Bash(npm run build)",
+      "WebFetch(domain:dev.fu.do)",
+      "Bash(curl -s -X POST \"https://integrations.fu.do/fudo/oauth/token\" -H \"Content-Type: application/x-www-form-urlencoded\" -d \"grant_type=client_credentials&client_id=MDAwMDI6MDI3OTg4&client_secret=qqSYk2xViTnckC8xPQar1V0F\")",
+      "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiJ9.eyJhaSI6Mjc5ODgsInVpIjo1NTE5MywiZXhwIjoxNzcyNTAzMDY5fQ.a88gkZ5Fm4F2qILkWMXb4jcUGNsX_mGljLXA669tT60\")",
+      "Bash(__NEW_LINE_441b20fde3f799b1__ echo \"=== /products \\(first 3\\) ===\")",
+      "Bash(curl -s \"https://api.fu.do/v1alpha1/products?page[size]=3\" -H \"Authorization: Bearer $TOKEN\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(__NEW_LINE_aa4ee4c6a3a067ab__ echo \"=== /products ===\")",
+      "Bash(curl -s \"https://api.fu.do/v1alpha1/products?page%5Bsize%5D=3\" -H \"Authorization: Bearer $TOKEN\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d, indent=2, ensure_ascii=False\\)\\)\")",
+      "Bash(npm install @tanstack/react-query)",
+      "Bash(\"/Users/lucianoyomayel/luciano/proyectos/profesional/nueva recoleta/.env\":*)",
+      "Bash(npm install @googlemaps/js-api-loader)",
+      "Bash(npm install -D @types/google.maps)",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}
