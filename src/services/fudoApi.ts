@@ -7,8 +7,10 @@ import type {
 } from '../types/fudo';
 
 // ─── Config ───────────────────────────────────────────────────────────────────
-const AUTH_URL = 'https://auth.fu.do/api';
-const API_URL  = 'https://api.fu.do/v1alpha1';
+/** In production (e.g. Netlify) we use same-origin proxy to avoid CORS from auth.fu.do / api.fu.do */
+const useProxy = import.meta.env.PROD;
+const AUTH_URL = useProxy ? '/.netlify/functions/fudo-auth' : 'https://auth.fu.do/api';
+const API_URL  = useProxy ? '/.netlify/functions/fudo-api' : 'https://api.fu.do/v1alpha1';
 
 const API_KEY        = import.meta.env.VITE_FUDO_API_KEY        as string;
 const API_KEY_SECRET = import.meta.env.VITE_FUDO_API_KEY_SECRET as string;
@@ -25,7 +27,7 @@ async function getToken(): Promise<string> {
   const res = await fetch(AUTH_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ apiKey: API_KEY, apiSecret: API_KEY_SECRET }),
+    body: useProxy ? '{}' : JSON.stringify({ apiKey: API_KEY, apiSecret: API_KEY_SECRET }),
   });
 
   if (!res.ok) {
@@ -44,8 +46,9 @@ async function getToken(): Promise<string> {
 
 async function apiFetch<T>(path: string): Promise<T> {
   const token = await getToken();
+  const url = useProxy ? `${API_URL}?path=${encodeURIComponent(path)}` : `${API_URL}${path}`;
 
-  const res = await fetch(`${API_URL}${path}`, {
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
@@ -171,7 +174,6 @@ export function normaliseProducts(
       if (b.bestsellRank !== undefined) return 1;
       return a.position - b.position;
     });
-    console.log(products.length);
     return products;
 }
 
